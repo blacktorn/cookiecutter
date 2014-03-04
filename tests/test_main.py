@@ -126,7 +126,7 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
             # It's possibly an edge case in CookiecutterCleanSystemTestCase.
             # Improvements to this would be appreciated. -- @audreyr
             sys.stdin = StringIO('\n\n\n\n\n\n\n\n\n\n')
-        main.cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
+        main.cookiecutter('git+https://github.com/audreyr/cookiecutter-pypackage.git')
         logging.debug('Current dir is {0}'.format(os.getcwd()))
         clone_dir = os.path.join(os.path.expanduser('~/.cookiecutters'), 'cookiecutter-pypackage')
         self.assertTrue(os.path.exists(clone_dir))
@@ -138,7 +138,7 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
     def test_cookiecutter_mercurial(self):
         if not PY3:
             sys.stdin = StringIO('\n\n\n\n\n\n\n\n\n')
-        main.cookiecutter('https://bitbucket.org/pokoli/cookiecutter-trytonmodule')
+        main.cookiecutter('hg+https://bitbucket.org/pokoli/cookiecutter-trytonmodule')
         logging.debug('Current dir is {0}'.format(os.getcwd()))
         clone_dir = os.path.join(os.path.expanduser('~/.cookiecutters'), 'cookiecutter-trytonmodule')
         self.assertTrue(os.path.exists(clone_dir))

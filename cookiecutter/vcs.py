@@ -44,9 +44,9 @@ def identify_repo(repo_url):
     :returns: "git", "hg", or None.
     """
     
-    if "git" in repo_url:
+    if repo_url.startswith("git+"):
         return "git"
-    elif "bitbucket" in repo_url:
+    elif repo_url.startswith("hg+"):
         return "hg"
     else:
         raise UnknownRepoType
@@ -65,6 +65,7 @@ def clone(repo_url, checkout=None, clone_to_dir="."):
     make_sure_path_exists(clone_to_dir)
     
     repo_type = identify_repo(repo_url)
+    repo_url = repo_url.split('+', 1)[1]
     
     tail = os.path.split(repo_url)[1]
     if repo_type == "git":

@@ -125,7 +125,7 @@ class TestExamplesRepoArg(CookiecutterCleanSystemTestCase):
 
     def test_cookiecutter_pypackage_git(self):
         proc = subprocess.Popen(
-            'cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git',
+            'cookiecutter git+https://github.com/audreyr/cookiecutter-pypackage.git',
             stdin=subprocess.PIPE,
             shell=True
         )
@@ -150,7 +150,7 @@ class TestGitBranch(CookiecutterCleanSystemTestCase):
 
     def test_branch(self):
         proc = subprocess.Popen(
-            'cookiecutter -c console-script https://github.com/audreyr/cookiecutter-pypackage.git',
+            'cookiecutter -c console-script git+https://github.com/audreyr/cookiecutter-pypackage.git',
             stdin=subprocess.PIPE,
             shell=True
         )

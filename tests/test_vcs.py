@@ -37,19 +37,19 @@ encoding = locale.getdefaultlocale()[1]
 class TestIdentifyRepo(unittest.TestCase):
 
     def test_identify_git_github(self):
-        repo_url = "https://github.com/audreyr/cookiecutter-pypackage.git"
+        repo_url = "git+https://github.com/audreyr/cookiecutter-pypackage.git"
         self.assertEqual(vcs.identify_repo(repo_url), "git")
 
     def test_identify_git_github_no_extension(self):
-        repo_url = "https://github.com/audreyr/cookiecutter-pypackage"
+        repo_url = "git+https://github.com/audreyr/cookiecutter-pypackage"
         self.assertEqual(vcs.identify_repo(repo_url), "git")
 
     def test_identify_git_gitorious(self):
-        repo_url = "git@gitorious.org:cookiecutter-gitorious/cookiecutter-gitorious.git"
+        repo_url = "git+git@gitorious.org:cookiecutter-gitorious/cookiecutter-gitorious.git"
         self.assertEqual(vcs.identify_repo(repo_url), "git")
 
     def test_identify_hg_mercurial(self):
-        repo_url = "https://audreyr@bitbucket.org/audreyr/cookiecutter-bitbucket"
+        repo_url = "hg+https://audreyr@bitbucket.org/audreyr/cookiecutter-bitbucket"
         self.assertEqual(vcs.identify_repo(repo_url), "hg")
 
 
@@ -57,7 +57,7 @@ class TestVCS(unittest.TestCase):
 
     def test_git_clone(self):
         repo_dir = vcs.clone(
-            'https://github.com/audreyr/cookiecutter-pypackage.git'
+            'git+https://github.com/audreyr/cookiecutter-pypackage.git'
         )
         self.assertEqual(repo_dir, 'cookiecutter-pypackage')
         self.assertTrue(os.path.isfile('cookiecutter-pypackage/README.rst'))
@@ -66,7 +66,7 @@ class TestVCS(unittest.TestCase):
 
     def test_git_clone_checkout(self):
         repo_dir = vcs.clone(
-            'https://github.com/audreyr/cookiecutter-pypackage.git',
+            'git+https://github.com/audreyr/cookiecutter-pypackage.git',
             'console-script'
         )
         git_dir = 'cookiecutter-pypackage'
@@ -88,7 +88,7 @@ class TestVCS(unittest.TestCase):
     def test_git_clone_custom_dir(self):
         os.makedirs("tests/custom_dir1/custom_dir2/")
         repo_dir = vcs.clone(
-            repo_url='https://github.com/audreyr/cookiecutter-pypackage.git',
+            repo_url='git+https://github.com/audreyr/cookiecutter-pypackage.git',
             checkout=None,
             clone_to_dir="tests/custom_dir1/custom_dir2/"
         )
@@ -103,7 +103,7 @@ class TestVCS(unittest.TestCase):
 
     def test_hg_clone(self):
         repo_dir = vcs.clone(
-            'https://bitbucket.org/pokoli/cookiecutter-trytonmodule'
+            'hg+https://bitbucket.org/pokoli/cookiecutter-trytonmodule'
         )
         self.assertEqual(repo_dir, 'cookiecutter-trytonmodule')
         self.assertTrue(os.path.isfile('cookiecutter-trytonmodule/README.rst'))
@@ -126,7 +126,7 @@ class TestVCSPrompt(unittest.TestCase):
         if not PY3:
             sys.stdin = StringIO('y\n\n')
         repo_dir = vcs.clone(
-            'https://github.com/audreyr/cookiecutter-pypackage.git'
+            'git+https://github.com/audreyr/cookiecutter-pypackage.git'
         )
         self.assertEqual(repo_dir, 'cookiecutter-pypackage')
         self.assertTrue(os.path.isfile('cookiecutter-pypackage/README.rst'))
@@ -138,7 +138,7 @@ class TestVCSPrompt(unittest.TestCase):
         self.assertRaises(
             SystemExit,
             vcs.clone,
-            'https://github.com/audreyr/cookiecutter-pypackage.git'
+            'git+https://github.com/audreyr/cookiecutter-pypackage.git'
         )
 
     @patch(input_str, lambda: 'y')
@@ -146,7 +146,7 @@ class TestVCSPrompt(unittest.TestCase):
         if not PY3:
             sys.stdin = StringIO('y\n\n')
         repo_dir = vcs.clone(
-            'https://bitbucket.org/pokoli/cookiecutter-trytonmodule'
+            'hg+https://bitbucket.org/pokoli/cookiecutter-trytonmodule'
         )
         self.assertEqual(repo_dir, 'cookiecutter-trytonmodule')
         self.assertTrue(os.path.isfile('cookiecutter-trytonmodule/README.rst'))
@@ -158,7 +158,7 @@ class TestVCSPrompt(unittest.TestCase):
         self.assertRaises(
             SystemExit,
             vcs.clone,
-            'https://bitbucket.org/pokoli/cookiecutter-trytonmodule'
+            'hg+https://bitbucket.org/pokoli/cookiecutter-trytonmodule'
         )
 
     def tearDown(self):

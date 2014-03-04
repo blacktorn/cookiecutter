@@ -40,7 +40,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     config_dict = get_user_config()
 
     # TODO: find a better way to tell if it's a repo URL
-    if "git@" in input_dir or "https://" in input_dir:
+    if input_dir.startswith("git+") or input_dir.startswith("hg+"):
         repo_dir = clone(
             repo_url=input_dir,
             checkout=checkout,
